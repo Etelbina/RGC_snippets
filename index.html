@@ -8,9 +8,10 @@
       <title>Language menu</title>
    </head>
    <body>
+
 <style>
 .language-box {
-	position: fixed;
+	position: fixed; 
 	top: 0;
 	right: 0;
 	width: 40px;
@@ -23,7 +24,7 @@
 	text-align: center;
 }
 
-.language-box a {
+.language-option {
 	color: #FFD8D5;
 	text-decoration: none;
 	font-weight: 400;
@@ -43,26 +44,18 @@
 	border-bottom: 1px solid #d3d3d3;
 	order: 0;
 }
-
-.language-selected::after {
-	content: "";
-	background-size: contain;
-	background-repeat: no-repeat;
-}
+/* Drop down */
 
 .language-wrapper {
-	color: #BE988F;
-	font-weight: 400;
-	width: 100%;
 	max-height: 0;
 	opacity: 0;
 	overflow: hidden;
 	transition: all 0.4s;
 	order: 1;
 }
-
+ 
 .language-wrapper.active {
-	max-height: 40px;
+	max-height: 40px; 
 	opacity: 1;
 }
 
@@ -70,50 +63,36 @@
 	cursor: pointer;
 }
 
-.language-option .radio {
-	display: none;
-}
 </style>
 
 <div class="language-selection">
   <div class="language-box">
     <div class="language-wrapper">
-      <div class="language-option">
-        <input type="radio" class="radio" id="esp" name="category" />
-        <label for="esp"><a href="https://sites.google.com/view/randomgirlcodes-es" target="_blank" rel="noopener noreferrer">Esp</a></label>
-      </div>
-      <div class="language-option">
-        <input type="radio" class="radio" id="eng" name="eng" />
-        <label for="eng"><a href="https://sites.google.com/view/randomgirlcodes-en" target="_blank" rel="noopener noreferrer">Eng</a></label>
-      </div>
+	  <div class="language-option" data-url="https://sites.google.com/view/randomgirlcodes-es"><label>Esp</label></div>
+      <div class="language-option" data-url="https://sites.google.com/view/randomgirlcodes-en"><label>Eng</label></div>
     </div>
     <div class="language-selected">Lang</div>
   </div>
 </div>
 
+
 <script>
 const languageSelected = document.querySelector(".language-selected");
-const languageContainer = document.querySelector(".language-wrapper");
-const languageList = document.querySelectorAll(".language-option");
+const languageDropdown = document.querySelector(".language-wrapper");
+const languageOptions = document.querySelectorAll(".language-option");
 
+// activate dropdown
 languageSelected.addEventListener("click", () => {
-	languageContainer.classList.toggle("active");
+	languageDropdown.classList.toggle("active");
 });
 
-languageList.forEach(option => {
-	option.addEventListener("click", () => {
-		// Restaurar todas las opciones (mostrar todas)
-		languageList.forEach(opt => opt.style.display = "block");
-		
-		// Actualizar el texto seleccionado
-		languageSelected.innerHTML = option.querySelector("label").innerHTML;
-		
-		// Ocultar la opción seleccionada
-		option.style.display = "none";
-		
-		// Cerrar el desplegable
-		languageContainer.classList.remove("active");
-	});
+// open link and close dropdown
+languageOptions.forEach(option => {
+    option.addEventListener("click", (e) => {
+        const url = option.dataset.url;
+        window.open(url, "_blank");
+        languageDropdown.classList.remove("active");
+    });
 });
 </script>
 
